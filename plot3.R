@@ -17,6 +17,11 @@ cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$
 # with(cp1_datetime, lines(datetime, Sub_metering_2, type="l", col = "red"))
 # with(cp1_datetime, lines(datetime, Sub_metering_3, type="l", col = "blue"))
 
-with(cp1_datetime, plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38)))
-with(cp1_datetime, lines(datetime, Sub_metering_2, type="l", col = "red"))
-with(cp1_datetime, lines(datetime, Sub_metering_3, type="l", col = "blue"))
+# with(cp1_datetime, plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38)))
+# with(cp1_datetime, lines(datetime, Sub_metering_2, type="l", col = "red"))
+# with(cp1_datetime, lines(datetime, Sub_metering_3, type="l", col = "blue"))
+
+attach(cp1_datetime)
+plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38))
+lines(datetime, Sub_metering_2, type="l", col = "red")
+lines(datetime, Sub_metering_3, type="l", col = "blue")
