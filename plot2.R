@@ -6,6 +6,7 @@ cp1_data <- read.table("data/household_power_consumption.txt", sep=";", na.strin
 # Need to read the first line in separately to use as column headers.
 
 cp1_cols <- read.table("data/household_power_consumption.txt", stringsAsFactors = FALSE, nrows = 1, sep =";")
+colnames(cp1_data) <- cp1_cols
 
 #The first two columns should be read in as a date+time:
 cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), "%d/%m/%Y %H:%M:%S")))

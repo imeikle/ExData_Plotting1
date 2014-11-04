@@ -11,18 +11,17 @@ colnames(cp1_data) <- cp1_cols
 #The first two columns should be read in as a date+time:
 cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), "%d/%m/%Y %H:%M:%S")))
 
-# with(cp1_datetime, plot(datetime, Sub_metering_1, type="n"))
-# with(cp1_datetime, plot(datetime, Sub_metering_2, type="n"))
-# with(cp1_datetime, plot(datetime, Sub_metering_3, type="n", xlab = "", ylab = "Energy sub metering", ylim = c(0,38)))
-# with(cp1_datetime, lines(datetime, Sub_metering_1, type="l"))
-# with(cp1_datetime, lines(datetime, Sub_metering_2, type="l", col = "red"))
-# with(cp1_datetime, lines(datetime, Sub_metering_3, type="l", col = "blue"))
-
-# with(cp1_datetime, plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38)))
-# with(cp1_datetime, lines(datetime, Sub_metering_2, type="l", col = "red"))
-# with(cp1_datetime, lines(datetime, Sub_metering_3, type="l", col = "blue"))
-
 attach(cp1_datetime)
+par(mfrow = c(2,2))
+
+plot(datetime, Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
+
+plot(datetime, Voltage, type = "l")
+
 plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38))
+par(new=TRUE)
 lines(datetime, Sub_metering_2, type="l", col = "red")
+par(new=TRUE)
 lines(datetime, Sub_metering_3, type="l", col = "blue")
+
+plot(datetime, Global_active_power, type = "l")
