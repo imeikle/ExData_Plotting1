@@ -10,6 +10,5 @@ colnames(cp1_data) <- cp1_cols
 
 # Plot first histogram - needs labels and titles
 hist(cp1_data$Global_active_power, col = "red", xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
-
-
-
+dev.copy(png, file = "plot1.png")
+dev.off()

@@ -13,3 +13,5 @@ cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$
 
 plot(cp1_datetime$Global_active_power ~ cp1_datetime$datetime, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
 lines(cp1_datetime$Global_active_power ~ cp1_datetime$datetime, type = "l")
+dev.copy(png, file ="plot2.png")
+dev.off()
