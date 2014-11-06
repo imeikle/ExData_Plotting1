@@ -16,6 +16,10 @@ cp1.datetime <- within(cp1.data,
   datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
   "%d/%m/%Y %H:%M:%S")))
 
+
+# Open the PNG graphics device
+png(file ="plot4.png")
+
 # Set the layout to a 2x2 matrixx of plots
 par(mfrow = c(2,2))
 
@@ -66,6 +70,5 @@ plot(cp1.datetime$datetime, cp1.datetime$Global_reactive_power,
   xlab = "datetime",
   ylab = "Global_reactive_power")
 
-# Copy to the bitmapped graphics device
-dev.copy(png, file ="plot4.png")
+# Close the bitmapped graphics device
 dev.off()

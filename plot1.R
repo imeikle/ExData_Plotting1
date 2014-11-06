@@ -11,10 +11,12 @@ cp1.cols <- read.table("data/household_power_consumption.txt",
   stringsAsFactors = FALSE, nrows = 1, sep =";")
 colnames(cp1.data) <- cp1.cols
 
+# Open the PNG graphics device
+png(file ="plot1.png")
+
 # Plot histogram to the screen graphics device
 hist(cp1.data$Global_active_power, col = "red", 
   xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
 
-# Copy to the bitmapped graphics device
-dev.copy(png, file = "plot1.png")
+# Close the bitmapped graphics device
 dev.off()

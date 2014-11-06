@@ -16,6 +16,9 @@ cp1.datetime <- within(cp1.data,
   datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
   "%d/%m/%Y %H:%M:%S")))
 
+# Open the PNG graphics device
+png(file ="plot3.png")
+
 # Create plot and draw first line, setting the limits of the y-axis
 plot(cp1.datetime$datetime, cp1.datetime$Sub_metering_1, 
   type="l",
@@ -39,6 +42,5 @@ legend("topright",
   lty=1, 
   legend=colnames(cp1.datetime[7:9]))
 
-# Copy to the bitmapped graphics device
-dev.copy(png, file ="plot3.png")
+# Close the bitmapped graphics device
 dev.off()

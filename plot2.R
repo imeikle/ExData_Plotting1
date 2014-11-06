@@ -16,6 +16,9 @@ cp1.datetime <- within(cp1.data,
   datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
   "%d/%m/%Y %H:%M:%S")))
 
+# Open the PNG graphics device
+png(file ="plot2.png")
+
 # Create plot, but don't print to screen graphics device
 plot(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, 
   type = "n", 
@@ -25,6 +28,5 @@ plot(cp1.datetime$Global_active_power ~ cp1.datetime$datetime,
 # Draw the line graph to screen graphics device
 lines(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, type = "l")
 
-# Copy to the bitmapped graphics device
-dev.copy(png, file ="plot2.png")
+# Close the bitmapped graphics device
 dev.off()
