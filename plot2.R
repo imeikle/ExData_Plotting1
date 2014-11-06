@@ -1,17 +1,30 @@
-cp1_col_classes <- c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric")
-cp1_data <- read.table("data/household_power_consumption.txt", sep=";", na.strings="?", colClasses = cp1_col_classes, nrows=2880, skip=66637)
+# Create a vector of class definitions for the columns
+cp1.classes <- c("character", "character", "numeric", "numeric", "numeric", 
+  "numeric", "numeric", "numeric", "numeric")
 
-# How to verify no NA values included? Looks as if not an issue using Sublime Text
+# Lines to be read determined by inspecting file
+cp1.data <- read.table("data/household_power_consumption.txt", sep=";", 
+  na.strings="?", colClasses = cp1.classes, nrows=2880, skip=66637)
 
-# Need to read the first line in separately to use as column headers.
+# Need to read the first line in separately to use as column headers
+cp1.cols <- read.table("data/household_power_consumption.txt", 
+  stringsAsFactors = FALSE, nrows = 1, sep =";")
+colnames(cp1.data) <- cp1.cols
 
-cp1_cols <- read.table("data/household_power_consumption.txt", stringsAsFactors = FALSE, nrows = 1, sep =";")
-colnames(cp1_data) <- cp1_cols
+# Add extra column, converting the first two columns to a date
+cp1.datetime <- within(cp1.data, 
+  datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
+  "%d/%m/%Y %H:%M:%S")))
 
-#The first two columns should be read in as a date+time:
-cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), "%d/%m/%Y %H:%M:%S")))
+# Create plot, but don't print to screen graphics device
+plot(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, 
+  type = "n", 
+  xlab = "", 
+  ylab = "Global Active Power (kilowatts)")
 
-plot(cp1_datetime$Global_active_power ~ cp1_datetime$datetime, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
-lines(cp1_datetime$Global_active_power ~ cp1_datetime$datetime, type = "l")
+# Draw the line graph to screen graphics device
+lines(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, type = "l")
+
+# Copy to the bitmapped graphics device
 dev.copy(png, file ="plot2.png")
 dev.off()

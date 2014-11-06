@@ -1,31 +1,71 @@
-cp1_col_classes <- c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric")
-cp1_data <- read.table("data/household_power_consumption.txt", sep=";", na.strings="?", colClasses = cp1_col_classes, nrows=2880, skip=66637)
+# Create a vector of class definitions for the columns
+cp1.classes <- c("character", "character", "numeric", "numeric", "numeric", 
+  "numeric", "numeric", "numeric", "numeric")
 
-# How to verify no NA values included? Looks as if not an issue using Sublime Text
+# Lines to be read determined by inspecting file
+cp1.data <- read.table("data/household_power_consumption.txt", sep=";", 
+  na.strings="?", colClasses = cp1.classes, nrows=2880, skip=66637)
 
-# Need to read the first line in separately to use as column headers.
+# Need to read the first line in separately to use as column headers
+cp1.cols <- read.table("data/household_power_consumption.txt", 
+  stringsAsFactors = FALSE, nrows = 1, sep =";")
+colnames(cp1.data) <- cp1.cols
 
-cp1_cols <- read.table("data/household_power_consumption.txt", stringsAsFactors = FALSE, nrows = 1, sep =";")
-colnames(cp1_data) <- cp1_cols
+# Add extra column, converting the first two columns to a date
+cp1.datetime <- within(cp1.data, 
+  datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
+  "%d/%m/%Y %H:%M:%S")))
 
-#The first two columns should be read in as a date+time:
-cp1_datetime <- within(cp1_data, datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), "%d/%m/%Y %H:%M:%S")))
-
-attach(cp1_datetime)
+# Set the layout to a 2x2 matrixx of plots
 par(mfrow = c(2,2))
 
-plot(datetime, Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
+# Repeat plot from plot2.R
+plot(cp1.datetime$datetime, cp1.datetime$Global_active_power,
+  type = "l",
+  xlab = "",
+  ylab = "Global Active Power")
 
-plot(datetime, Voltage, type = "l")
+# Create new plot
+plot(cp1.datetime$datetime, cp1.datetime$Voltage,
+     type = "l",
+     xlab = "datetime",
+     ylab = "Voltage")
 
-plot(datetime, Sub_metering_1, type="l", xlab = "", ylab = "Energy sub metering", ylim = c(0,38))
-par(new=TRUE)
-lines(datetime, Sub_metering_2, type="l", col = "red")
-par(new=TRUE)
-lines(datetime, Sub_metering_3, type="l", col = "blue")
-par(new=TRUE)
-legend("topright", col=c("black", "blue", "red"),lty=1, bty="n",legend=colnames(cp1_datetime[7:9]))
+# Repeat plot from plot3.R
+plot(cp1.datetime$datetime, cp1.datetime$Sub_metering_1,
+  type="l",
+  xlab = "",
+  ylab = "Energy sub metering",
+  ylim = c(0,38))
 
-plot(datetime, Global_reactive_power, type = "l")
+# Do not clean the frame prior to drawing
+par(new=TRUE)
+lines(cp1.datetime$datetime, cp1.datetime$Sub_metering_2,
+  type="l",
+  col = "red")
+
+# Do not clean the frame prior to drawing
+par(new=TRUE)
+lines(cp1.datetime$datetime, cp1.datetime$Sub_metering_3,
+  type="l",
+  col = "blue")
+
+# Do not clean the frame prior to drawing
+par(new=TRUE)
+
+# Repeat legend from plot3.R, but without box
+legend("topright",
+  col=c("black", "blue", "red"),
+  lty=1,
+  bty="n",
+  legend=colnames(cp1_datetime[7:9]))
+
+# Create new plot
+plot(cp1.datetime$datetime, cp1.datetime$Global_reactive_power,
+  type = "l",
+  xlab = "datetime",
+  ylab = "Global_reactive_power")
+
+# Copy to the bitmapped graphics device
 dev.copy(png, file ="plot4.png")
 dev.off()
