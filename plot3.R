@@ -1,5 +1,5 @@
 cp1_col_classes <- c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric")
-cp1_data <- read.table("data/household_power_consumption.txt", sep=";", na.strings="?", colClasses = cp1_col_classes, nrows=2879, skip=66637)
+cp1_data <- read.table("data/household_power_consumption.txt", sep=";", na.strings="?", colClasses = cp1_col_classes, nrows=2880, skip=66637)
 
 # How to verify no NA values included? Looks as if not an issue using Sublime Text
 
