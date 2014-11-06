@@ -14,7 +14,7 @@ colnames(cp1.data) <- cp1.cols
 # Open the PNG graphics device
 png(file ="plot1.png")
 
-# Plot histogram to the screen graphics device
+# Plot histogram with title
 hist(cp1.data$Global_active_power, col = "red", 
   xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
 

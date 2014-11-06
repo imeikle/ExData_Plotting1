@@ -19,13 +19,13 @@ cp1.datetime <- within(cp1.data,
 # Open the PNG graphics device
 png(file ="plot2.png")
 
-# Create plot, but don't print to screen graphics device
+# Create plot, but don't print to the graphics device
 plot(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, 
   type = "n", 
   xlab = "", 
   ylab = "Global Active Power (kilowatts)")
 
-# Draw the line graph to screen graphics device
+# Draw the line graph
 lines(cp1.datetime$Global_active_power ~ cp1.datetime$datetime, type = "l")
 
 # Close the bitmapped graphics device
