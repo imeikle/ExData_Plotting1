@@ -13,7 +13,7 @@ colnames(cp1.data) <- cp1.cols
 
 # Add extra column, converting the first two columns to a date
 cp1.datetime <- within(cp1.data, 
-  datetime <- as.POSIXct(strptime(paste(cp1_data$Date, cp1_data$Time), 
+  datetime <- as.POSIXct(strptime(paste(cp1.data$Date, cp1.data$Time), 
   "%d/%m/%Y %H:%M:%S")))
 
 
@@ -59,10 +59,10 @@ par(new=TRUE)
 
 # Repeat legend from plot3.R, but without box
 legend("topright",
-  col=c("black", "blue", "red"),
+  col=c("black", "red", "blue"),
   lty=1,
   bty="n",
-  legend=colnames(cp1_datetime[7:9]))
+  legend=colnames(cp1.datetime[7:9]))
 
 # Create new plot
 plot(cp1.datetime$datetime, cp1.datetime$Global_reactive_power,
